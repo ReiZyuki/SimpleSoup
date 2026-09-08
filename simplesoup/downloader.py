@@ -127,6 +127,22 @@ class Downloader:
     # Main Engine
     # ============================================================
 
+    def cookie_exists(self, cookie):
+        return os.path.isfile(cookie)
+
+    def test_cookie(self, url, cookie):
+        options = {
+            "quiet": True,
+            "no_warnings": True,
+            "cookiefile": cookie
+        }
+
+        with yt_dlp.YoutubeDL(options) as ydl:
+            ydl.extract_info(
+                url,
+                download=False
+            )
+
     def execute(
         self,
         config,
