@@ -183,19 +183,34 @@ pip install "simplesoup[gallery]"
 
 Cookies
 
-Cookies simplesoup/core.py mein configure kiye jaate hain:
+SimpleSoup automatic cookie fallback support karta hai.
 
-COOKIES = "/storage/emulated/0/Download/cookies.txt"
+User apne cookie file paths `ReiZyuki` variable mein de sakta hai:
 
-Example:
+ReiZyuki = [
+    "/storage/emulated/0/Download/youtube.txt",
+    "/storage/emulated/0/Download/instagram.txt",
+    "/storage/emulated/0/Download/reddit.txt"
+]
 
-COOKIES = "/storage/emulated/0/Download/reddit_cookies.txt"
+Uske baad normal syntax hi use karo:
 
-Cookies disable karne ke liye:
+result = rz({
+    "title": "title",
+    "video[4]": "video"
+}, url)
 
-COOKIES = None
+SimpleSoup pehle URL ko bina cookies ke try karta hai.
 
-SimpleSoup configured cookie file ko use karta hai.
+Agar normal request successful ho jaaye, cookies test nahi kiye jaate.
+
+Agar normal request fail ho, to `ReiZyuki` mein diye gaye cookie paths ko one-by-one test kiya jaata hai.
+
+Jo pehla cookie current URL ke liye successfully kaam karta hai, SimpleSoup automatically usi cookie ko use karta hai.
+
+Kisi `cookies=` argument ki zarurat nahi hai.
+
+Missing ya failed cookie automatically skip hota hai aur next cookie test hota hai.
 
 Progress Callback
 
@@ -302,4 +317,4 @@ rz({
 
 Version
 
-SimpleSoup 0.1.0
+SimpleSoup 2026.09.08
