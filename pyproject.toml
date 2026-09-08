@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simplesoup"
+version = "0.1.0"
+description = "Simple CSS-style yt-dlp and FFmpeg wrapper"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "yt-dlp"
+]
+
+[project.optional-dependencies]
+gallery = [
+    "gallery-dl"
+]
+
+[tool.setuptools.packages.find]
+include = ["simplesoup*"]
