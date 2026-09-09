@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplesoup"
-version = "2026.09.10"
+version = "2026.09.11"
 description = "Simple CSS-style yt-dlp and FFmpeg wrapper"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "yt-dlp"
+    "yt-dlp",
+    "requests"
 ]
 
 [project.optional-dependencies]
