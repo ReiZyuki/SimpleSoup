@@ -44,11 +44,11 @@ video[4] = 720p.
 Video Quality
 
 video[0] → audio
-video[2] → 360p
-video[3] → 480p
-video[4] → 720p
-video[5] → 1080p
-video[6] → best available
+video[1] → 360p
+video[2] → 480p
+video[3] → 720p
+video[4] → 1080p
+video[5] → best available
 
 Example:
 
