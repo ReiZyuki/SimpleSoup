@@ -1,10 +1,512 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>SimpleSoup</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleSoup - Download Videos, Playlists & Galleries</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #9205f2 0%, #6a0dad 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(146, 5, 242, 0.3);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header .tagline {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        header .version {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .intro {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(146, 5, 242, 0.1);
+            margin-bottom: 50px;
+            border-left: 5px solid #9205f2;
+        }
+
+        .intro h2 {
+            color: #9205f2;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(146, 5, 242, 0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid #9205f2;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(146, 5, 242, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #9205f2;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .code-section {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 20px rgba(146, 5, 242, 0.1);
+        }
+
+        .code-section h3 {
+            color: #9205f2;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .code-section pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-highlight {
+            color: #ce9178;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .function {
+            color: #dcdcaa;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .capabilities {
+            background: linear-gradient(135deg, #9205f2 0%, #6a0dad 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 10px;
+            margin: 50px 0;
+            box-shadow: 0 4px 15px rgba(146, 5, 242, 0.3);
+        }
+
+        .capabilities h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .capability-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #fff;
+        }
+
+        .capability-item h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .capability-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .installation {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(146, 5, 242, 0.1);
+            margin: 50px 0;
+            border-left: 5px solid #9205f2;
+        }
+
+        .installation h2 {
+            color: #9205f2;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .install-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #333;
+            border-left: 3px solid #9205f2;
+        }
+
+        .install-box code {
+            color: #9205f2;
+            font-weight: 600;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #9205f2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6a0dad;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #9205f2;
+            border: 2px solid #9205f2;
+        }
+
+        .btn-secondary:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .quality-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(146, 5, 242, 0.1);
+        }
+
+        .quality-table th {
+            background: #9205f2;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .quality-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .quality-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        .accent {
+            color: #9205f2;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .header .tagline {
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .code-section {
+                overflow-x: auto;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to SimpleSoup</h1>
-    <p>Your Python project documentation goes here</p>
+    <header>
+        <h1>🍲 SimpleSoup</h1>
+        <p class="tagline">Download Videos, Playlists & Galleries with Ease</p>
+        <p class="version">Version 2026.09.09</p>
+    </header>
+
+    <div class="container">
+        <!-- Introduction -->
+        <section class="intro">
+            <h2>What is SimpleSoup?</h2>
+            <p>SimpleSoup is a <strong>powerful Python library</strong> for downloading videos, playlists, and galleries from multiple platforms. With a simple and intuitive API, you can extract video metadata, download content at various quality levels, and process galleries—all in just a few lines of code.</p>
+            <p>Built for speed, reliability, and ease of use. Perfect for automation, archiving, and content processing workflows.</p>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Single Video Download</h3>
+                <p>Download videos at multiple quality levels (360p to 1080p) with just one simple request.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📺</div>
+                <h3>Playlist Support</h3>
+                <p>Download entire playlists with custom skip and count parameters. Perfect for batch processing.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>Gallery Downloading</h3>
+                <p>Extract and download image galleries from various platforms using gallery-dl integration.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Metadata Extraction</h3>
+                <p>Get title, creator, views, likes, comments, duration, and more without downloading video.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Cookie Support</h3>
+                <p>Automatic cookie fallback system for accessing restricted or protected content.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Progress Tracking</h3>
+                <p>Real-time progress callbacks showing download percentage, speed, and mode.</p>
+            </div>
+        </section>
+
+        <!-- Installation -->
+        <section class="installation">
+            <h2>Installation</h2>
+            <p>Install SimpleSoup from PyPI:</p>
+            <div class="install-box"><code>pip install simplesoup</code></div>
+            <p style="margin-top: 20px;"><strong>For Gallery Support:</strong></p>
+            <div class="install-box"><code>pip install "simplesoup[gallery]"</code></div>
+            <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">After installation, you can start using SimpleSoup in your Python projects.</p>
+        </section>
+
+        <!-- Quick Start -->
+        <section class="code-section">
+            <h3>⚡ Quick Start Example</h3>
+            <pre><span class="keyword">from</span> simplesoup <span class="keyword">import</span> <span class="function">rz</span>
+
+url = <span class="string">"https://example.com/video"</span>
+
+result = <span class="function">rz</span>({
+    <span class="string">"video[4]"</span>: <span class="string">"video"</span>,
+    <span class="string">"title"</span>: <span class="string">"title"</span>,
+    <span class="string">"creator"</span>: <span class="string">"creator"</span>,
+    <span class="string">"views"</span>: <span class="string">"views"</span>
+}, url)
+
+<span class="keyword">print</span>(<span class="string">"Title:"</span>, result[<span class="string">"title"</span>])
+<span class="keyword">print</span>(<span class="string">"Creator:"</span>, result[<span class="string">"creator"</span>])
+<span class="keyword">print</span>(<span class="string">"Views:"</span>, result[<span class="string">"views"</span>])</pre>
+        </section>
+
+        <!-- Capabilities -->
+        <section class="capabilities">
+            <h2>Key Capabilities</h2>
+            <div class="capabilities-grid">
+                <div class="capability-item">
+                    <h4>🎯 Video Quality Options</h4>
+                    <p>video[0] = Audio | video[2] = 360p | video[3] = 480p | video[4] = 720p | video[5] = 1080p</p>
+                </div>
+
+                <div class="capability-item">
+                    <h4>📋 Metadata Fields</h4>
+                    <p>title, creator, url, views, likes, count (comments), time (duration), thumbnail</p>
+                </div>
+
+                <div class="capability-item">
+                    <h4>🎞️ Playlist Syntax</h4>
+                    <p>playlist: "QUALITY:SKIP:COUNT" - Download specific videos from playlists</p>
+                </div>
+
+                <div class="capability-item">
+                    <h4>🖼️ Gallery Mode</h4>
+                    <p>Download entire image galleries from supported platforms</p>
+                </div>
+
+                <div class="capability-item">
+                    <h4>🔄 Multiple Values</h4>
+                    <p>Request video + metadata in a single call for efficiency</p>
+                </div>
+
+                <div class="capability-item">
+                    <h4>💾 Auto Save</h4>
+                    <p>Default: /storage/emulated/0/Download/ReiDownloader/</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Quality Reference -->
+        <section>
+            <h2 style="color: #9205f2; margin-bottom: 20px;">Video Quality Reference</h2>
+            <table class="quality-table">
+                <thead>
+                    <tr>
+                        <th>Quality Code</th>
+                        <th>Resolution</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>video[0]</strong></td>
+                        <td>Audio Only</td>
+                        <td>Download only audio track</td>
+                    </tr>
+                    <tr>
+                        <td><strong>video[2]</strong></td>
+                        <td>360p</td>
+                        <td>Standard definition</td>
+                    </tr>
+                    <tr>
+                        <td><strong>video[3]</strong></td>
+                        <td>480p</td>
+                        <td>Enhanced standard</td>
+                    </tr>
+                    <tr>
+                        <td><strong>video[4]</strong></td>
+                        <td>720p</td>
+                        <td>HD (Recommended)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>video[5]</strong></td>
+                        <td>1080p</td>
+                        <td>Full HD</td>
+                    </tr>
+                    <tr>
+                        <td><strong>video[6]</strong></td>
+                        <td>Best Available</td>
+                        <td>Highest quality available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="capabilities" style="margin-top: 50px;">
+            <h2>Ready to Download?</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;">Start using SimpleSoup today and streamline your media downloading workflow.</p>
+            <div style="text-align: center;">
+                <a href="https://pypi.org/project/simplesoup/" class="btn btn-secondary" style="color: white; border-color: white;">View on PyPI</a>
+                <a href="https://github.com/ReiZyuki/SimpleSoup" class="btn btn-secondary" style="color: white; border-color: white;">View on GitHub</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SimpleSoup • Made with <span class="accent">💜</span> by ReiZyuki | Version 2026.09.09</p>
+    </footer>
 </body>
 </html>
